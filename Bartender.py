@@ -1,52 +1,38 @@
 import random
 
+questions = {
+"strong": "Do ye like yer drinks strong?",
+"salty": "Do ye like it with a salty tang?",
+"bitter": "Are ye a lubber who likes it bitter?",
+"sweet": "Would ye like a bit of sweetness with yer poison?",
+"fruity": "Are ye one for a fruity finish?",
+}
 
-# menu
-def print_menu():
-    print("What is your taste?")
-    print("1. Strong")
-    print("2. Salty")
-    print("3. Bitter")
-    print("4. Sweet")
-    print("5. Fruity")
+ingredients = {
+"strong": ["glug of rum", "slug of whisky", "splash of gin"],
+"salty": ["olive on a stick", "salt-dusted rim", "rasher of bacon"],
+"bitter": ["shake of bitters", "splash of tonic", "twist of lemon peel"],
+"sweet": ["sugar cube", "spoonful of honey", "spash of cola"],
+"fruity": ["slice of orange", "dash of cassis", "cherry on top"],
+}
 
+def question():
+    keys = questions.keys()
+    values = list(keys)
+    random_taste = random.choice(values)
+    print(questions[random_taste] + '(Y/N)')
+    return random_taste
 
-# get user choice
-def get_user_option():
-    option = int(input("Enter your choice (1-5): "))
-    return option
+def user_input(taste):
+    user_choice = input()
+    if(user_choice == 'Y'):
+        print(random.choice(ingredients[taste]))
+    questions.pop(taste)
+    return user_choice
 
+while True:
+    if(len(questions) == 0):
+        break
 
-ingredient_based_on_taste = {'strong': ['glug of rum', 'slug of whisky', 'splash of gin'],
-                             'salty': ['olive on a stick', 'salt-dusted rim', 'rasher of bacon'],
-                             'bitter': ['shake of bitters', 'splash of tonic', 'twist of lemon peel'],
-                             'sweet': ['sugar cube', 'spoonful of honey', 'spash of cola'],
-                             'fruity': ['slice of orange', 'dash of cassis', 'cherry on top']
-                            }
-
-
-# get random ingredient
-def ingredient(taste):
-    random_ingredient = 'none'
-    if taste == 1:
-        print("You chose STRONG")
-        random_ingredient = random.choice(ingredient_based_on_taste['strong'])
-    elif taste == 2:
-        print("You chose SALTY")
-        random_ingredient = random.choice(ingredient_based_on_taste['salty'])
-    elif taste == 3:
-        print("You chose BITTER")
-        random_ingredient = random.choice(ingredient_based_on_taste['bitter'])
-    elif taste == 4:
-        print("You chose SWEET")
-        random_ingredient = random.choice(ingredient_based_on_taste['sweet'])
-    elif taste == 5:
-        print("You chose FRUITY")
-        random_ingredient = random.choice(ingredient_based_on_taste['fruity'])
-    return random_ingredient
-
-
-# main
-print_menu()
-choice = get_user_option()
-print('Ingredient: ' + ingredient(choice))
+    taste = question()
+    choice = user_input(taste)
